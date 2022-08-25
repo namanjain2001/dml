@@ -1,0 +1,267 @@
+/****************GLOBAL****************/
+
+:root {
+  --lightBG: #d0ebff;
+  --btnPrimary: #228be6;
+  --btnPrimaryHover: #1c7ed6;
+  --bgSecondary: #fa5252;
+  --bgSecondaryHover: #d22c2c;
+  --textPrimary: #1c7ed6;
+  --textWhite: #fff;
+  --BgDarkShade: #495057;
+}
+
+#root {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  min-height: 100vh;
+  color: #000;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.heading_main {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.btn-primary {
+  border-color: var(--btnPrimary);
+  background-color: var(--btnPrimary);
+  min-height: 42px;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.btn-primary:hover {
+  border-color: var(--btnPrimaryHover);
+  background-color: var(--btnPrimaryHover);
+}
+
+.btn-secondary-custom {
+  border-color: var(--bgSecondary);
+  background-color: var(--bgSecondary);
+  min-height: 42px;
+  font-weight: 600;
+  border-radius: 4px;
+  color: var(--textWhite);
+}
+
+.btn-secondary-custom:hover {
+  border-color: var(--bgSecondaryHover);
+  background-color: var(--bgSecondaryHover);
+  color: var(--textWhite);
+}
+
+.form-control {
+  min-height: 42px;
+}
+
+.textPrimary {
+  color: var(--textPrimary);
+}
+
+i {
+  vertical-align: -6px;
+}
+
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgb(255 255 255 / 70%);
+  z-index: 99;
+}
+
+/****************GLOBAL ENDS**********/
+
+/***********HEADER*******************/
+
+.logo_main span {
+  font-size: 20px;
+}
+
+/***********HEADER ENDS**************/
+
+/************FOOTER*****************/
+
+footer {
+  background-color: var(--lightBG);
+  font-size: 12px;
+}
+
+/************FOOTER ENDS************/
+
+/***********LOGIN PAGE**************/
+
+.login_form_cont {
+  width: 60%;
+}
+
+.showHidePassword {
+  position: absolute;
+  bottom: 9px;
+  right: 15px;
+  cursor: pointer;
+}
+
+/***********LOGIN PAGE ENDS*********/
+
+/***********ForgotPassword Page*********/
+
+.verify_otp_forgotPassword .col-2 {
+  display: flex;
+  align-items: center;
+}
+
+.verify_otp_forgotPassword .OTP_seperator {
+  margin-left: 8px;
+}
+
+.verify_otp_forgotPassword .form-control {
+  width: 50px;
+  text-align: center;
+  padding: 2px;
+}
+
+/***********ForgotPassword Page ENDS****/
+
+/***********DASHBOARD PAGES***************/
+
+.sidebar {
+  width: 300px;
+  background: var(--BgDarkShade);
+}
+
+.sidebar ul li a,
+.logout_user_btn {
+  display: block;
+  padding: 10px 12px;
+  font-weight: 500;
+  color: var(--textWhite);
+  border-radius: 4px;
+  font-size: 14px;
+  border: 0;
+}
+
+.sidebar ul {
+  flex-grow: 1;
+}
+
+.logout_user {
+  border-top: solid 1px var(--textPrimary);
+}
+
+.sidebar i {
+  margin-right: 6px;
+}
+
+.sidebar ul li a:hover,
+.logout_user_btn:hover {
+  background-color: var(--btnPrimary);
+  color: var(--textWhite);
+}
+
+.sidebar ul li a.active {
+  background-color: var(--btnPrimaryHover);
+}
+
+.dashboardData {
+  width: calc(100% - 300px);
+  height: calc(100vh - 112px);
+  overflow-y: auto;
+}
+
+.progress_count_block {
+  flex: 1;
+}
+
+.progress_count_block i {
+  font-size: 52px;
+}
+
+.progress_count_number {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.progress_count_block div {
+  margin-left: 6px;
+}
+
+.progress_count_label {
+  font-size: 14px;
+  margin-left: 6px;
+}
+
+.active_campaign i {
+  color: blue;
+}
+
+.active_campaign .progress_count_number {
+  color: var(--textPrimary);
+}
+
+.leads_generated i {
+  color: orange;
+}
+
+.leads_generated .progress_count_number {
+  color: #f76707;
+}
+
+.integration_created i {
+  color: green;
+}
+
+.integration_created .progress_count_number {
+  color: #37b24d;
+}
+
+.autorenew i {
+  color: indigo;
+}
+
+.autorenew .progress_count_number {
+  color: #4263eb;
+}
+
+.dashboardData_heading h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.dashboard_main .custom_form_style .form-label {
+  font-size: 14px;
+}
+
+.table_style th,
+.table_style td {
+  font-size: 14px;
+}
+
+.edit_this i {
+  font-size: 20px;
+}
+
+.linkStyleBtn {
+  font-size: 14px;
+}
+
+.linkStyleBtn i {
+  font-size: 22px;
+}
+
+/***********DASHBOARD PAGES ENDS**********/
