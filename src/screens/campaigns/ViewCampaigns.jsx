@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "../../components/SideBar";
 import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -17,6 +17,7 @@ const ViewCampaigns = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { getThisCamp } = location.state;
+  const [addSelectVal, setAddSelectVal] = useState(null);
 
   const updateCampaignReducer = useSelector(
     (store) => store.updateCampaignReducer
@@ -63,6 +64,7 @@ const ViewCampaigns = () => {
   const userLoginReducer = useSelector((store) => store.userLoginReducer);
   const { loginUser } = userLoginReducer;
   useEffect(() => {
+    setAddSelectVal(getThisCamp.companyObjId);
     if (!loginUser) {
       navigate("/");
     }
@@ -134,7 +136,9 @@ const ViewCampaigns = () => {
                       className={`form-select${
                         errors.chooseCompany ? " is-invalid" : ""
                       }`}
+                      value={addSelectVal}
                       {...register("chooseCompany", {
+                        onChange: (e) => setAddSelectVal(e.target.value),
                         required: "This field is required",
                       })}
                     >
