@@ -11,7 +11,9 @@ import {
   DELETE_COMPANY_REQUEST,
   DELETE_COMPANY_SUCCESS,
   DELETE_COMPANY_FAILED,
-  DELETE_COMPANY_RESET,
+  LIST_ROLE_REQUEST,
+  LIST_ROLE_SUCCESS,
+  LIST_ROLE_FAILED,
 } from "../constants/dashboardConstants";
 import axios from "axios";
 
@@ -175,6 +177,45 @@ export const deleteCompanyAction = (_id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: DELETE_COMPANY_FAILED,
+      payload: error,
+    });
+  }
+};
+
+export const roleAction = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: LIST_ROLE_REQUEST });
+
+    const { userLoginReducer } = getState();
+    const { loginUser } = userLoginReducer;
+
+    let token = loginUser.r || loginUser.data[0].r;
+
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_SERVER_URL}/roles/read`,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
+
+    if (data.type === 1) {
+      dispatch({
+        type: LIST_ROLE_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: LIST_ROLE_FAILED,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: LIST_ROLE_FAILED,
       payload: error,
     });
   }

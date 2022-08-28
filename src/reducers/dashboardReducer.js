@@ -14,6 +14,9 @@ import {
   DELETE_COMPANY_SUCCESS,
   DELETE_COMPANY_FAILED,
   DELETE_COMPANY_RESET,
+  LIST_ROLE_REQUEST,
+  LIST_ROLE_SUCCESS,
+  LIST_ROLE_FAILED,
 } from "../constants/dashboardConstants";
 
 export const addCompanyReducer = (state = {}, action) => {
@@ -102,6 +105,28 @@ export const deleteCompanyReducer = (state = {}, action) => {
       };
     case DELETE_COMPANY_RESET:
       return (state = {});
+    default:
+      return state;
+  }
+};
+
+export const roleReducer = (state = { userRole: [] }, action) => {
+  switch (action.type) {
+    case LIST_ROLE_REQUEST:
+      return {
+        loading: true,
+        userRole: [],
+      };
+    case LIST_ROLE_SUCCESS:
+      return {
+        loading: false,
+        userRole: action.payload,
+      };
+    case LIST_ROLE_FAILED:
+      return {
+        loading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

@@ -38,7 +38,6 @@ const Login = () => {
   const LoginSubmit = (data) => {
     if (data) {
       const { loginEmail, loginPassword } = data;
-      console.log(loginEmail, loginPassword);
       dispatch(userLoginAction(loginEmail, loginPassword));
     }
   };

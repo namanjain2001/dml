@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/shared/Loader";
 import { listCompanyAction } from "../../actions/dashboardAction";
+import { listFormAction } from "../../actions/formAction";
 import {
   updateCampaignAction,
   deleteCampaignAction,
@@ -17,7 +18,8 @@ const ViewCampaigns = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { getThisCamp } = location.state;
-  const [addSelectVal, setAddSelectVal] = useState(null);
+  const [addSelectVal, setAddSelectVal] = useState("");
+  const [addSelectForm, setAddSelectForm] = useState("");
 
   const updateCampaignReducer = useSelector(
     (store) => store.updateCampaignReducer
@@ -37,6 +39,9 @@ const ViewCampaigns = () => {
   const listCompanyReducer = useSelector((store) => store.listCompanyReducer);
   const { loading: listCamLoader, listedCompany } = listCompanyReducer;
 
+  const listFormReducer = useSelector((store) => store.listFormReducer);
+  const { loading: listFormLoader, listedForm } = listFormReducer;
+
   const {
     register,
     handleSubmit,
@@ -50,13 +55,14 @@ const ViewCampaigns = () => {
   });
 
   const updateCampaignSubmit = (data) => {
-    const { chooseCompany, companyName, campaignRemarks } = data;
+    const { chooseCompany, companyName, campaignRemarks, chooseForm } = data;
     dispatch(
       updateCampaignAction(
         chooseCompany,
         companyName,
         campaignRemarks,
-        getThisCamp._id
+        getThisCamp._id,
+        chooseForm
       )
     );
   };
@@ -65,10 +71,12 @@ const ViewCampaigns = () => {
   const { loginUser } = userLoginReducer;
   useEffect(() => {
     setAddSelectVal(getThisCamp.companyObjId);
+    setAddSelectForm(getThisCamp.formsObjId);
     if (!loginUser) {
       navigate("/");
     }
     dispatch(listCompanyAction());
+    dispatch(listFormAction());
     if (updateCampaign) {
       setTimeout(() => {
         navigate("/campaigns");
@@ -159,6 +167,45 @@ const ViewCampaigns = () => {
                     {errors.chooseCompany && (
                       <div className="invalid-feedback">
                         {errors.chooseCompany.message}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="form-group mb-3">
+                    <label
+                      htmlFor="chooseForm"
+                      className="form-label fw-semibold"
+                    >
+                      Choose form
+                    </label>
+                    <select
+                      id="chooseForm"
+                      className={`form-select${
+                        errors.chooseForm ? " is-invalid" : ""
+                      }`}
+                      value={addSelectForm}
+                      {...register("chooseForm", {
+                        onChange: (e) => setAddSelectForm(e.target.value),
+                        required: "This field is required",
+                      })}
+                    >
+                      {listFormLoader ? (
+                        <option disabled>Loading...</option>
+                      ) : (
+                        listedForm.map((allListedForm, indexNumber) => {
+                          return (
+                            <React.Fragment key={indexNumber}>
+                              <option value={allListedForm._id}>
+                                {allListedForm.formName}
+                              </option>
+                            </React.Fragment>
+                          );
+                        })
+                      )}
+                    </select>
+                    {errors.chooseForm && (
+                      <div className="invalid-feedback">
+                        {errors.chooseForm.message}
                       </div>
                     )}
                   </div>

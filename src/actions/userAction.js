@@ -8,6 +8,9 @@ import {
   USER_NEW_PASSWORD_REQUEST,
   USER_NEW_PASSWORD_SUCCESS,
   USER_NEW_PASSWORD_FAILED,
+  CREATE_USER_REQUEST,
+  CREATE_USER_SUCCESS,
+  CREATE_USER_FAILED,
 } from "../constants/userConstant";
 
 import axios from "axios";
@@ -126,6 +129,55 @@ export const userNewPasswordAction =
       dispatch({
         type: USER_NEW_PASSWORD_FAILED,
         payload: "Something went worng. Please try again.",
+      });
+    }
+  };
+
+export const addUserAction =
+  (name, phone, email, password, profilePic, companyObjId, roleObjId) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({ type: CREATE_USER_REQUEST });
+
+      const { userLoginReducer } = getState();
+      const { loginUser } = userLoginReducer;
+
+      let token = loginUser.r || loginUser.data[0].r;
+
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/signup`,
+        {
+          name,
+          phone,
+          email,
+          password,
+          profilePic,
+          companyObjId,
+          roleObjId,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        }
+      );
+
+      if (data.type === 1) {
+        dispatch({
+          type: CREATE_USER_SUCCESS,
+          payload: data,
+        });
+      } else {
+        dispatch({
+          type: CREATE_USER_FAILED,
+          payload: data.message,
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: CREATE_USER_FAILED,
+        payload: error,
       });
     }
   };

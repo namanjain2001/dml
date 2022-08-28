@@ -53,7 +53,7 @@ export const listCampaignAction = () => async (dispatch, getState) => {
 };
 
 export const addCampaignAction =
-  (companyObjId, campaignName, campaignRemarks) =>
+  (companyObjId, campaignName, campaignRemarks, formsObjId) =>
   async (dispatch, getState) => {
     try {
       dispatch({ type: ADD_CAMPAIGN_REQUEST });
@@ -69,6 +69,7 @@ export const addCampaignAction =
           companyObjId,
           campaignName,
           campaignRemarks,
+          formsObjId,
         },
         {
           headers: {
@@ -98,7 +99,7 @@ export const addCampaignAction =
   };
 
 export const updateCampaignAction =
-  (companyObjId, campaignName, campaignRemarks, _id) =>
+  (companyObjId, campaignName, campaignRemarks, _id, formsObjId) =>
   async (dispatch, getState) => {
     try {
       dispatch({ type: UPDATE_CAMPAIGN_REQUEST });
@@ -110,7 +111,7 @@ export const updateCampaignAction =
 
       const { data } = await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/campaign/update`,
-        { companyObjId, campaignName, campaignRemarks, _id },
+        { companyObjId, campaignName, campaignRemarks, _id, formsObjId },
         {
           headers: {
             "Content-Type": "application/json",

@@ -264,4 +264,8 @@ footer {
   font-size: 22px;
 }
 
+.form-control[type="file"] {
+  line-height: 28px;
+}
+
 /***********DASHBOARD PAGES ENDS**********/

@@ -5,12 +5,17 @@ import {
   userLoginReducer,
   userForgetPasswordInitiateReducer,
   userNewPasswordReducer,
+  //showUserReducer,
+  addUserReducer,
+  // updateUserReducer,
+  // deleteUserReducer,
 } from "./reducers/userReducer";
 import {
   addCompanyReducer,
   listCompanyReducer,
   updateCompanyReducer,
   deleteCompanyReducer,
+  roleReducer,
 } from "./reducers/dashboardReducer";
 import {
   listCampaignReducer,
@@ -19,10 +24,16 @@ import {
   deleteCampaignReducer,
 } from "./reducers/campaignsReducer";
 
+import { listFormReducer } from "./reducers/formReducer";
+
 const rootReducer = combineReducers({
   userLoginReducer,
   userForgetPasswordInitiateReducer,
   userNewPasswordReducer,
+  //showUserReducer,
+  addUserReducer,
+  // updateUserReducer,
+  //deleteUserReducer,
   addCompanyReducer,
   listCompanyReducer,
   updateCompanyReducer,
@@ -31,6 +42,8 @@ const rootReducer = combineReducers({
   addCampaignReducer,
   updateCampaignReducer,
   deleteCampaignReducer,
+  roleReducer,
+  listFormReducer,
 });
 
 const checkUserInfoDML = localStorage.getItem("userInfoDML")

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { addCampaignAction } from "../../actions/campaignsAction";
 import { listCompanyAction } from "../../actions/dashboardAction";
+import { listFormAction } from "../../actions/formAction";
 import Loader from "../shared/Loader";
 import Alert from "../shared/Alert";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +18,9 @@ const AddCampaignsData = () => {
   const listCompanyReducer = useSelector((store) => store.listCompanyReducer);
   const { loading: listCamLoader, listedCompany } = listCompanyReducer;
 
+  const listFormReducer = useSelector((store) => store.listFormReducer);
+  const { loading: listFormLoader, listedForm } = listFormReducer;
+
   const {
     register,
     handleSubmit,
@@ -27,14 +31,17 @@ const AddCampaignsData = () => {
   });
 
   const addCampaignSubmit = async (data) => {
-    const { chooseCompany, companyName, campaignRemarks } = data;
-    dispatch(addCampaignAction(chooseCompany, companyName, campaignRemarks));
+    const { chooseCompany, companyName, campaignRemarks, chooseForm } = data;
+    dispatch(
+      addCampaignAction(chooseCompany, companyName, campaignRemarks, chooseForm)
+    );
 
     reset();
   };
 
   useEffect(() => {
     dispatch(listCompanyAction());
+    dispatch(listFormAction());
     if (addedCampaign) {
       setTimeout(() => {
         navigate("/campaigns");
@@ -48,7 +55,7 @@ const AddCampaignsData = () => {
       <div className="addCompany addData_section">
         <div className="dashboardData_header">
           <div className="dashboardData_heading">
-            <h3 className="border-bottom pb-3 mb-5">Add new company</h3>
+            <h3 className="border-bottom pb-3 mb-5">Add new campaign</h3>
           </div>
         </div>
         <div className="custom_form_style">
@@ -92,6 +99,40 @@ const AddCampaignsData = () => {
               {errors.chooseCompany && (
                 <div className="invalid-feedback">
                   {errors.chooseCompany.message}
+                </div>
+              )}
+            </div>
+
+            <div className="form-group mb-3">
+              <label htmlFor="chooseForm" className="form-label fw-semibold">
+                Choose form
+              </label>
+              <select
+                id="chooseForm"
+                className={`form-select${
+                  errors.chooseForm ? " is-invalid" : ""
+                }`}
+                {...register("chooseForm", {
+                  required: "This field is required",
+                })}
+              >
+                {listFormLoader ? (
+                  <option disabled>Loading...</option>
+                ) : (
+                  listedForm.map((allListedForm, indexNumber) => {
+                    return (
+                      <React.Fragment key={indexNumber}>
+                        <option value={allListedForm._id}>
+                          {allListedForm.formName}
+                        </option>
+                      </React.Fragment>
+                    );
+                  })
+                )}
+              </select>
+              {errors.chooseForm && (
+                <div className="invalid-feedback">
+                  {errors.chooseForm.message}
                 </div>
               )}
             </div>
@@ -151,7 +192,7 @@ const AddCampaignsData = () => {
                 Cancel
               </button>
               <button type="submit" className="ms-2 btn btn-primary">
-                Add Company
+                Add Campaign
               </button>
             </div>
           </form>
